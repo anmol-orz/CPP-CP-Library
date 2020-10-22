@@ -1,0 +1,32 @@
+const ll maxn = 2e5;
+vll adj[maxn+3];
+ll n, m;
+vi vis(maxn+3, 0);
+
+int last = 1;
+int d_0 = 0;
+
+void dfs(int v, int d){
+    vis[v] = 1;
+    for(int u: adj[v]){
+        if(!vis[u]){
+            dfs(u, d+1);
+        }
+    }
+    if(d>=d_0){
+        d_0  = d;
+        last = v;
+    }
+}
+
+
+void solve()
+{
+    cin>>n ;
+    m = n-1;
+    fo(i,1,m){ ll u, v; cin>>u>>v; adj[u].pb(v); adj[v].pb(u); }
+    dfs(1, 0);
+    fill_n(vis.begin(), n+3, 0);
+    dfs(last, 0);
+    pp(d_0);
+}

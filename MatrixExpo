@@ -1,0 +1,36 @@
+int K = 3; ll n;
+vvll mult(vvll A, vvll B){
+    // return C = A*B; not A and B must be in range of mod;
+    vvll C(K+1,vll(K+1,0));
+    fo(i,1,K)fo(j,1,K)fo(k,1,K) add(C[i][j], A[i][k]*B[k][j]);
+    re C;
+}
+
+vvll matexp(vvll X, ll y){
+    // return RES = X^y
+    vvll RES(K+1,vll(K+1,0));
+    fo(i,1,K)RES[i][i]=1;
+    while(y>0){
+        if(y&1) RES = mult(RES,X);
+        X = mult(X,X); y = y>>1;
+    }
+    re RES;
+}
+
+void solve()
+{
+  // set K and n // handle n = 0 case
+  vll F1(K+1);
+  // set F1
+  vvll T(K+1,vll(K+1,0));
+  // set T last but one rows
+  fo(i,1,K-1) T[i][i+1]=1;
+  // set last T's last row this will depend on the logic of the recurrence
+  T = matexp(T, n-1);
+  
+  // find ans
+  ll ans = 0;
+  fo(i,1,K) add(ans,T[1][i]*F1[i]);
+
+  cout<<ans<<endl; 
+}
